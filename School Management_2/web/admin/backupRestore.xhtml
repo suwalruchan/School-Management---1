@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+  <body>
+
+    <ui:composition template="adminTemplate.xhtml">
+      <ui:define name="title">
+        Backup Restore
+      </ui:define>
+
+      <ui:define name="right">
+
+      </ui:define>
+
+      <ui:define name="content">
+           <h:head>Recent backup detail </h:head>
+          
+        <hr />  
+          <h:outputLabel>#{backupRestoreBean.restoreMsg}</h:outputLabel>
+          <h:outputLabel>#{backupRestoreBean.backupMsg}</h:outputLabel>
+         
+        <h:panelGrid border="0" cellpadding="3" columns="2" columnClasses="pfcol,pscol" class="col2">
+            <f:view>
+          <h:form>
+               <p:growl id="warn" showDetail="true"/>
+            <p:panel id="all" style="font-size: 9pt;padding: 0;margin: 0;border: none;">
+              <p:growl showDetail="true" id="g"/>
+              <h:panelGrid columns="2" style="margin: 0 auto;">
+                  <p:commandButton value="one click backup" action="#{backupRestoreBean.oneClickBackup()}" update="all,g" ajax="false" styleClass="one-click-backup"/>
+                  <p:commandButton value="one click restore"  action="#{backupRestoreBean.oneClickRestore()}" update="all,g" ajax="false" styleClass="one-click-restore"/>
+              </h:panelGrid>
+              <h:panelGrid columns="2" style="margin: 0 auto;">
+                  <p:commandButton action="loginForm.xhtml" value="Backup to gDrive" styleClass="gDrive-backup" />
+                  <h:link outcome="uploadForm.xhtml" value="Upload and Restore" styleClass="upload-restore" />
+              </h:panelGrid>
+            </p:panel>
+          </h:form>
+        </f:view>
+        </h:panelGrid>
+         
+          <h:panelGrid border="0" cellpadding="3" columns="2" columnClasses="pfool,pscl" class="col2" style="background-color: #045491; color: #ffffff">
+              <h3 style="float: left;padding: 10px;">Recent Backup Detail</h3> 
+              <h:link outcome="backups.xhtml" value="View All" style="position: relative; right: 0px; border: 1px #55c70d ridge; color: #ffffff; padding: 10px;" />
+          </h:panelGrid>
+          
+           <h:panelGrid border="0" cellpadding="3" columns="2" columnClasses="pfool,pscl" class="col2">
+               
+              <ui:repeat value="#{backupRestoreBean.backup}" var="backupData">
+                  <div id="row">
+                      <div style="float:left; width:30%">
+                          <h4>Name</h4>
+                      </div>
+                      <div style="float:left;">
+                          <h4>#{backupData.fileName}</h4>
+                      </div>
+                      <div style="clear: both"></div>
+                  </div>
+                  <div id="row">
+                      <div style="float:left; width:30%">
+                          <h4>Created Date</h4>
+                      </div>
+                      <div style="float:left;">
+                          <h4>#{backupData.createdDateTime}</h4>
+                      </div>
+                      <div style="clear: both"></div>
+                  </div>
+                  <div id="row">
+                      <div style="float:left; width:30%">
+                          <h4>Storage</h4>
+                      </div>
+                      <div style="float:left;">
+                          <h4>#{backupData.storage}</h4>
+                      </div>
+                      <div style="clear: both"></div>
+                  </div>
+                  <div id="row">
+                      <div style="float:left; width:30%">
+                          <h4>Download</h4>
+                      </div>
+                      <div style="float:left;">
+                          <h:outputLink  value="#{backupData.filePath}"><h4><u>Download</u></h4></h:outputLink>
+                      </div>
+                      <div style="clear: both"></div>
+                  </div>
+                  
+              </ui:repeat>
+        </h:panelGrid>
+        <hr/>
+      </ui:define>
+
+
+    </ui:composition>
+
+  </body>
+</html>
